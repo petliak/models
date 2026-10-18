@@ -1,0 +1,2467 @@
+{
+  "summary": {
+    "title": "Universal Threat Model: AI Agent Integration with SIEM",
+    "owner": "Threat modeling working draft",
+    "description": "Відкрита для адаптації модель загроз інтеграції AI-агента із системою SIEM. Модель є універсальною та не прив’язана до виробника. Два DFD: загальна архітектура інтеграції та внутрішні потоки AI-агента. Позначення серйозності є попередніми для перегляду в Threat Dragon; числове оцінювання ризику не задається.",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [
+      {
+        "title": "01 — Загальний контекст інтеграції SIEM та AI-агента",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "diagramType": "STRIDE",
+        "id": 0,
+        "size": {
+          "width": 1600,
+          "height": 900
+        },
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 150,
+                "height": 75
+              },
+              "position": {
+                "x": 40,
+                "y": 120
+              },
+              "angle": 0,
+              "id": "d0a44016-8f87-4336-ba31-2176058de9fc",
+              "z": 1,
+              "description": "Зовнішній суб’єкт може впливати на частину вмісту подій, що надходять до системи.",
+              "threats": [
+                {
+                  "number": 1,
+                  "threatId": "db5f4f7b-10f2-4fad-b312-0dbc0a47ff79",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Підміна або ін’єкція вмісту телеметрії",
+                  "type": "Spoofing",
+                  "description": "Зовнішній суб’єкт може вплинути на вміст події або сформувати запис, який сприймається як легітимне джерело. Після потрапляння до контуру моніторингу такий текст може стати частиною контексту AI-агента.",
+                  "mitigation": "Перевіряти походження телеметрії та ідентичність джерела; зберігати метадані походження; відокремлювати автентичність каналу від довіри до семантичного вмісту."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "E1\nЗовнішній суб’єкт /\nджерело керованого вмісту"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                },
+                "#element-shape": {
+                  "class": ""
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 145,
+                "height": 75
+              },
+              "position": {
+                "x": 230,
+                "y": 110
+              },
+              "angle": 0,
+              "id": "df868f2f-dcfa-4a50-9615-ea27c3621dfa",
+              "z": 2,
+              "description": "Кінцеві вузли, мережеві пристрої, застосунки та інші джерела подій.",
+              "threats": [
+                {
+                  "number": 2,
+                  "threatId": "508e3a2b-06a0-42d2-b7d9-984d9cf81142",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Підміна або ін’єкція вмісту телеметрії",
+                  "type": "Spoofing",
+                  "description": "Зовнішній суб’єкт може вплинути на вміст події або сформувати запис, який сприймається як легітимне джерело. Після потрапляння до контуру моніторингу такий текст може стати частиною контексту AI-агента.",
+                  "mitigation": "Перевіряти походження телеметрії та ідентичність джерела; зберігати метадані походження; відокремлювати автентичність каналу від довіри до семантичного вмісту."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "C1\nДжерела телеметрії"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 150,
+                "height": 75
+              },
+              "position": {
+                "x": 420,
+                "y": 110
+              },
+              "angle": 0,
+              "id": "5e505875-3e0b-4ef3-8fff-fd476127b8ab",
+              "z": 3,
+              "description": "Приймання, первинне опрацювання та уніфікація телеметрії.",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "C2\nЗбирання та\nнормалізація"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 150,
+                "height": 75
+              },
+              "position": {
+                "x": 620,
+                "y": 110
+              },
+              "angle": 0,
+              "id": "4f119604-1a05-4ffa-8ed0-ed04247ba91e",
+              "z": 4,
+              "description": "Застосування правил, кореляція подій і формування сповіщень.",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "C3\nКореляція та\nсповіщення"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 150,
+                "height": 75
+              },
+              "position": {
+                "x": 820,
+                "y": 110
+              },
+              "angle": 0,
+              "id": "f07d4722-2e7a-4c21-ac1e-fbadf0dc2d30",
+              "z": 5,
+              "description": "Індексація та зберігання подій і сповіщень.",
+              "threats": [
+                {
+                  "number": 3,
+                  "threatId": "9b135c3b-7598-43ae-a81e-d5f7d379e305",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Надмірний доступ до даних SIEM",
+                  "type": "Information disclosure",
+                  "description": "Запитувач або інтеграційний компонент може отримати більший обсяг журналів, ніж потрібен для конкретного аналітичного завдання.",
+                  "mitigation": "Застосовувати мінімальні привілеї, обмежувати набори полів і періоди вибірки, фільтрувати чутливі дані та реєструвати запити."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "C4\nСховище та пошук"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "isALog": true
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 155,
+                "height": 75
+              },
+              "position": {
+                "x": 1020,
+                "y": 110
+              },
+              "angle": 0,
+              "id": "2e1f3813-91a9-4d00-a0df-1fb2709cf6eb",
+              "z": 6,
+              "description": "Інтерфейс для читання визначених даних і, за наявності прав, доступу до операцій.",
+              "threats": [
+                {
+                  "number": 4,
+                  "threatId": "9197c1e5-19e6-4acf-9441-babf53044243",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Зловживання повноваженнями інтерфейсу",
+                  "type": "Elevation of privilege",
+                  "description": "Компрометований або надмірно привілейований компонент інтеграції може викликати операції, не потрібні для його призначення.",
+                  "mitigation": "Використовувати окремі ідентичності для читання та керування, мінімальні привілеї, allowlist операцій і незалежну перевірку кожного запиту на виконання."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "C5\nІнтерфейс SIEM / API"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "privilegeLevel": "Обмежені API-повноваження"
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 155,
+                "height": 75
+              },
+              "position": {
+                "x": 1220,
+                "y": 110
+              },
+              "angle": 0,
+              "id": "3a4c21f0-3f88-43ae-8292-e8b789152082",
+              "z": 7,
+              "description": "Вибірка та фільтрація даних, передавання до агента зі збереженням метаданих походження.",
+              "threats": [
+                {
+                  "number": 5,
+                  "threatId": "45debff0-5f4a-4dd6-9078-2efb37bfc8e2",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Надмірний доступ до даних SIEM",
+                  "type": "Information disclosure",
+                  "description": "Запитувач або інтеграційний компонент може отримати більший обсяг журналів, ніж потрібен для конкретного аналітичного завдання.",
+                  "mitigation": "Застосовувати мінімальні привілеї, обмежувати набори полів і періоди вибірки, фільтрувати чутливі дані та реєструвати запити."
+                },
+                {
+                  "number": 6,
+                  "threatId": "e85776d7-4262-4f9b-aa00-a6e4550d6983",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Зловживання повноваженнями інтерфейсу",
+                  "type": "Elevation of privilege",
+                  "description": "Компрометований або надмірно привілейований компонент інтеграції може викликати операції, не потрібні для його призначення.",
+                  "mitigation": "Використовувати окремі ідентичності для читання та керування, мінімальні привілеї, allowlist операцій і незалежну перевірку кожного запиту на виконання."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "C6\nІнтеграційний адаптер"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "privilegeLevel": "Мінімальні привілеї"
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 175,
+                "height": 90
+              },
+              "position": {
+                "x": 1220,
+                "y": 330
+              },
+              "angle": 0,
+              "id": "4eb54482-4b33-4f3b-bae4-442434d94721",
+              "z": 8,
+              "description": "Формує контекст, інтерпретує дані та готує висновки або запропоновані дії.",
+              "threats": [
+                {
+                  "number": 7,
+                  "threatId": "1ad0148e-3b7a-4df5-9fe1-4e25dc38caf3",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Змішування інструкцій і недовіреної телеметрії",
+                  "type": "Tampering",
+                  "description": "Текст, контрольований зовнішнім суб’єктом, може бути інтерпретований AI-агентом як керівна інструкція, якщо роль і походження фрагментів контексту не збережені.",
+                  "mitigation": "Розділяти системні інструкції та недовірений вміст структурно; маркувати походження кожного фрагмента; не дозволяти вхідному тексту змінювати політики чи надавати права інструментам."
+                },
+                {
+                  "number": 8,
+                  "threatId": "2fcddadc-6047-4bef-852c-0e0103ff0d3b",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Надмірне навантаження на агентний контур",
+                  "type": "Denial of service",
+                  "description": "Надмірний обсяг подій, контексту або повторних викликів може призвести до виснаження ресурсів чи затримки аналізу.",
+                  "mitigation": "Застосовувати ліміти розміру контексту, частоти запитів, часу виконання й кількості ітерацій; передбачити тайм-аути та контроль циклів."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "C7\nПідсистема AI-агента"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "privilegeLevel": "Немає прямих прав виконання за замовчуванням"
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 175,
+                "height": 85
+              },
+              "position": {
+                "x": 1010,
+                "y": 520
+              },
+              "angle": 0,
+              "id": "7fd9e646-1910-4e91-9835-aae63d3cd1c9",
+              "z": 9,
+              "description": "Перевіряє операції та аргументи перед передаванням виконавцю.",
+              "threats": [
+                {
+                  "number": 9,
+                  "threatId": "cf40914a-98af-4719-a3c7-63a000b10dcf",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Виконання несанкціонованого виклику інструмента",
+                  "type": "Elevation of privilege",
+                  "description": "Згенерований агентом запит може містити недозволену операцію або небезпечні аргументи. Текстова відповідь LLM сама по собі не є дозволом на виконання.",
+                  "mitigation": "Перевіряти операцію, аргументи, ціль і контекст незалежним шлюзом політик перед виконанням; забороняти невідомі інструменти та операції за замовчуванням."
+                },
+                {
+                  "number": 10,
+                  "threatId": "93bdcffe-7165-4dd0-bb42-125db57375ed",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Спотворення контексту або аргументів операції",
+                  "type": "Tampering",
+                  "description": "Модифікація вхідного контексту чи аргументів між плануванням і виконанням може змінити сенс запланованої дії.",
+                  "mitigation": "Зберігати зв’язок між планом і фактичним викликом; перевіряти типи, діапазони та схему аргументів; повторно перевіряти ціль і дозволи безпосередньо перед виконанням."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "C8\nШлюз інструментів\nі політик"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "privilegeLevel": "Дозволяє лише явний allowlist"
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 150,
+                "height": 75
+              },
+              "position": {
+                "x": 1280,
+                "y": 650
+              },
+              "angle": 0,
+              "id": "0a5eedd3-d4a6-4977-9c74-aafb8c8645a5",
+              "z": 10,
+              "description": "Фіксує запити, рішення політик, виклики інструментів і результати.",
+              "threats": [
+                {
+                  "number": 11,
+                  "threatId": "0528bade-55b2-4821-971b-a5165080ae6e",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Недостатня простежуваність дій агента",
+                  "type": "Repudiation",
+                  "description": "Якщо контекст, рішення, виклик інструмента та його результат не пов’язані спільним ідентифікатором, неможливо надійно відновити послідовність взаємодій.",
+                  "mitigation": "Вести цілісний аудит із correlation/session ID, фіксувати запит, застосовану політику, рішення дозволу/відмови та результат без запису зайвих секретів."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "C9\nЖурнал аудиту"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "isALog": true
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 145,
+                "height": 75
+              },
+              "position": {
+                "x": 770,
+                "y": 360
+              },
+              "angle": 0,
+              "id": "1716e382-83e6-4332-a69a-8c686b74c0f7",
+              "z": 11,
+              "description": "Отримувач пояснень, узагальнень і рекомендацій для ухвалення рішень.",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "C10\nАналітик SOC"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                },
+                "#element-shape": {
+                  "class": ""
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 175,
+                "height": 75
+              },
+              "position": {
+                "x": 1010,
+                "y": 710
+              },
+              "angle": 0,
+              "id": "89d95c67-0c1f-451a-97f7-fda3cd73a911",
+              "z": 12,
+              "description": "Виконує лише дозволені операції, якщо така можливість включена в архітектуру.",
+              "threats": [
+                {
+                  "number": 12,
+                  "threatId": "c70c6c7b-7c26-498e-ae04-3e0c71e56862",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Виконання несанкціонованого виклику інструмента",
+                  "type": "Elevation of privilege",
+                  "description": "Згенерований агентом запит може містити недозволену операцію або небезпечні аргументи. Текстова відповідь LLM сама по собі не є дозволом на виконання.",
+                  "mitigation": "Перевіряти операцію, аргументи, ціль і контекст незалежним шлюзом політик перед виконанням; забороняти невідомі інструменти та операції за замовчуванням."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "C11\nВиконавець дій\n(за потреби)"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "privilegeLevel": "Операції за allowlist"
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "d0a44016-8f87-4336-ba31-2176058de9fc"
+              },
+              "target": {
+                "id": "df868f2f-dcfa-4a50-9615-ea27c3621dfa"
+              },
+              "vertices": [
+                {
+                  "x": 200,
+                  "y": 100
+                }
+              ],
+              "id": "fd88d7c9-ef25-41a3-9e57-c80e05e7e6a2",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Вплив на вміст події",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 20,
+              "description": "Умовний зовнішній вплив на вміст; це не означає доступ до всіх джерел.",
+              "protocol": "Logical data flow",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "df868f2f-dcfa-4a50-9615-ea27c3621dfa"
+              },
+              "target": {
+                "id": "5e505875-3e0b-4ef3-8fff-fd476127b8ab"
+              },
+              "vertices": [
+                {
+                  "x": 400,
+                  "y": 95
+                }
+              ],
+              "id": "f5b7d41f-7ed3-4601-897e-dd7409da153d",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F1 — первинна телеметрія",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 21,
+              "description": "Первинні журнали та події; вміст може бути контрольований джерелом.",
+              "protocol": "Logical data flow",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "5e505875-3e0b-4ef3-8fff-fd476127b8ab"
+              },
+              "target": {
+                "id": "4f119604-1a05-4ffa-8ed0-ed04247ba91e"
+              },
+              "vertices": [
+                {
+                  "x": 595,
+                  "y": 95
+                }
+              ],
+              "id": "f554e571-5778-4bdb-bc40-db306dea423b",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F2 — нормалізовані події",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 22,
+              "description": "Нормалізовані події з контекстом походження.",
+              "protocol": "Logical data flow",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "4f119604-1a05-4ffa-8ed0-ed04247ba91e"
+              },
+              "target": {
+                "id": "f07d4722-2e7a-4c21-ac1e-fbadf0dc2d30"
+              },
+              "vertices": [
+                {
+                  "x": 795,
+                  "y": 95
+                }
+              ],
+              "id": "13bf0cd9-5c8c-47d1-becc-cd857b5111f0",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F3 — alerts / події",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 23,
+              "description": "Сповіщення та пов’язані записи.",
+              "protocol": "Logical data flow",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "f07d4722-2e7a-4c21-ac1e-fbadf0dc2d30"
+              },
+              "target": {
+                "id": "2e1f3813-91a9-4d00-a0df-1fb2709cf6eb"
+              },
+              "vertices": [
+                {
+                  "x": 995,
+                  "y": 95
+                }
+              ],
+              "id": "aa2aa1f6-b775-4bc6-98fb-c87d8582f28e",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F4 — результати пошуку",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 24,
+              "description": "Дані, доступні через інтерфейс SIEM.",
+              "protocol": "Logical data flow",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "2e1f3813-91a9-4d00-a0df-1fb2709cf6eb"
+              },
+              "target": {
+                "id": "3a4c21f0-3f88-43ae-8292-e8b789152082"
+              },
+              "vertices": [
+                {
+                  "x": 1195,
+                  "y": 95
+                }
+              ],
+              "id": "29195b34-be29-431c-9178-f7f46194abbf",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F5 — відповідь API",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 25,
+              "description": "Лише дані, доступні ідентичності адаптера.",
+              "protocol": "Logical data flow",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "3a4c21f0-3f88-43ae-8292-e8b789152082"
+              },
+              "target": {
+                "id": "4eb54482-4b33-4f3b-bae4-442434d94721"
+              },
+              "vertices": [
+                {
+                  "x": 1320,
+                  "y": 230
+                }
+              ],
+              "id": "274921d9-7632-4027-a772-e2633639118f",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F6 — відібраний контекст",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 26,
+              "description": "Контекст має зберігати мітки походження й довіри.",
+              "protocol": "Logical data flow",
+              "threats": [
+                {
+                  "number": 13,
+                  "threatId": "dbeaf6c8-5cd1-4701-ba42-14c3a2f5680f",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Змішування інструкцій і недовіреної телеметрії",
+                  "type": "Tampering",
+                  "description": "Текст, контрольований зовнішнім суб’єктом, може бути інтерпретований AI-агентом як керівна інструкція, якщо роль і походження фрагментів контексту не збережені.",
+                  "mitigation": "Розділяти системні інструкції та недовірений вміст структурно; маркувати походження кожного фрагмента; не дозволяти вхідному тексту змінювати політики чи надавати права інструментам."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "4eb54482-4b33-4f3b-bae4-442434d94721"
+              },
+              "target": {
+                "id": "1716e382-83e6-4332-a69a-8c686b74c0f7"
+              },
+              "vertices": [
+                {
+                  "x": 1020,
+                  "y": 370
+                }
+              ],
+              "id": "11612dbc-65bc-4ae2-bc5f-2cb44760e2ef",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F7 — пояснення / рекомендація",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 27,
+              "description": "Аналітичний результат для фахівця, не доказ достовірності події.",
+              "protocol": "Logical data flow",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "4eb54482-4b33-4f3b-bae4-442434d94721"
+              },
+              "target": {
+                "id": "7fd9e646-1910-4e91-9835-aae63d3cd1c9"
+              },
+              "vertices": [
+                {
+                  "x": 1190,
+                  "y": 460
+                }
+              ],
+              "id": "1c4b4521-33d1-420b-a048-03637cc9e8da",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F8 — запит інструмента",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 28,
+              "description": "Запит агента передається на незалежну перевірку.",
+              "protocol": "Logical data flow",
+              "threats": [
+                {
+                  "number": 14,
+                  "threatId": "318d6ffb-2a30-406a-bb17-ed1021e45deb",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Виконання несанкціонованого виклику інструмента",
+                  "type": "Elevation of privilege",
+                  "description": "Згенерований агентом запит може містити недозволену операцію або небезпечні аргументи. Текстова відповідь LLM сама по собі не є дозволом на виконання.",
+                  "mitigation": "Перевіряти операцію, аргументи, ціль і контекст незалежним шлюзом політик перед виконанням; забороняти невідомі інструменти та операції за замовчуванням."
+                },
+                {
+                  "number": 15,
+                  "threatId": "da1a8d39-7d43-41f9-8d06-3141f50a14c5",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Спотворення контексту або аргументів операції",
+                  "type": "Tampering",
+                  "description": "Модифікація вхідного контексту чи аргументів між плануванням і виконанням може змінити сенс запланованої дії.",
+                  "mitigation": "Зберігати зв’язок між планом і фактичним викликом; перевіряти типи, діапазони та схему аргументів; повторно перевіряти ціль і дозволи безпосередньо перед виконанням."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "7fd9e646-1910-4e91-9835-aae63d3cd1c9"
+              },
+              "target": {
+                "id": "89d95c67-0c1f-451a-97f7-fda3cd73a911"
+              },
+              "vertices": [
+                {
+                  "x": 1090,
+                  "y": 650
+                }
+              ],
+              "id": "ee241356-41fe-42d7-a541-155c7de359c2",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F9 — дозволена операція",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 29,
+              "description": "Виконання можливе лише після позитивного рішення політики.",
+              "protocol": "Logical data flow",
+              "threats": [
+                {
+                  "number": 16,
+                  "threatId": "fa606fdf-88c5-4cfb-87f8-0509296d82ab",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Виконання несанкціонованого виклику інструмента",
+                  "type": "Elevation of privilege",
+                  "description": "Згенерований агентом запит може містити недозволену операцію або небезпечні аргументи. Текстова відповідь LLM сама по собі не є дозволом на виконання.",
+                  "mitigation": "Перевіряти операцію, аргументи, ціль і контекст незалежним шлюзом політик перед виконанням; забороняти невідомі інструменти та операції за замовчуванням."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "4eb54482-4b33-4f3b-bae4-442434d94721"
+              },
+              "target": {
+                "id": "0a5eedd3-d4a6-4977-9c74-aafb8c8645a5"
+              },
+              "vertices": [
+                {
+                  "x": 1430,
+                  "y": 480
+                },
+                {
+                  "x": 1430,
+                  "y": 620
+                }
+              ],
+              "id": "d2701e4c-1075-4dc3-85e6-79b6069d3131",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "F10 — подія аудиту",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 30,
+              "description": "Контекст і дії агента мають корелюватися з записами аудиту.",
+              "protocol": "Logical data flow",
+              "threats": [
+                {
+                  "number": 17,
+                  "threatId": "198b1c20-89aa-4e62-9347-60ef031e268c",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Недостатня простежуваність дій агента",
+                  "type": "Repudiation",
+                  "description": "Якщо контекст, рішення, виклик інструмента та його результат не пов’язані спільним ідентифікатором, неможливо надійно відновити послідовність взаємодій.",
+                  "mitigation": "Вести цілісний аудит із correlation/session ID, фіксувати запит, застосовану політику, рішення дозволу/відмови та результат без запису зайвих секретів."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 205,
+                "y": 70
+              },
+              "target": {
+                "x": 205,
+                "y": 520
+              },
+              "vertices": [
+                {
+                  "x": 205,
+                  "y": 250
+                },
+                {
+                  "x": 205,
+                  "y": 410
+                }
+              ],
+              "id": "aa609cbe-4a9a-417e-a364-42955ba2159f",
+              "z": 40,
+              "isTrustBoundary": true,
+              "attrs": {}
+            }
+          ]
+        },
+        "description": "Універсальні функціональні компоненти C1–C11 та основні інформаційні потоки F1–F10. Виконавець дій є умовним компонентом і використовується лише якщо архітектура дозволяє автоматизоване реагування."
+      },
+      {
+        "title": "02 — Внутрішні модулі агента, межі довіри та циклічний сценарій",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "diagramType": "STRIDE",
+        "id": 1,
+        "size": {
+          "width": 1500,
+          "height": 820
+        },
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 165,
+                "height": 80
+              },
+              "position": {
+                "x": 60,
+                "y": 90
+              },
+              "angle": 0,
+              "id": "54b9a76c-f524-4bac-9606-dee9a35a22cc",
+              "z": 1,
+              "description": "Керівні інструкції та конфігурація, які змінюються лише довіреним адміністратором.",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "S1\nДовірені системні\nінструкції"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 175,
+                "height": 90
+              },
+              "position": {
+                "x": 60,
+                "y": 350
+              },
+              "angle": 0,
+              "id": "e8eb2aa2-21bf-4144-9b5c-ce365ae8abcb",
+              "z": 2,
+              "description": "Події, журнали, результати інструментів та зовнішні документи, які слід трактувати як дані, а не як системні інструкції.",
+              "threats": [
+                {
+                  "number": 18,
+                  "threatId": "22f970b0-556f-4ffa-a079-7fa56e4b7d3a",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Підміна або ін’єкція вмісту телеметрії",
+                  "type": "Spoofing",
+                  "description": "Зовнішній суб’єкт може вплинути на вміст події або сформувати запис, який сприймається як легітимне джерело. Після потрапляння до контуру моніторингу такий текст може стати частиною контексту AI-агента.",
+                  "mitigation": "Перевіряти походження телеметрії та ідентичність джерела; зберігати метадані походження; відокремлювати автентичність каналу від довіри до семантичного вмісту."
+                },
+                {
+                  "number": 19,
+                  "threatId": "6b7e6232-e3df-4276-bef1-0c34d2bb9a5f",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Змішування інструкцій і недовіреної телеметрії",
+                  "type": "Tampering",
+                  "description": "Текст, контрольований зовнішнім суб’єктом, може бути інтерпретований AI-агентом як керівна інструкція, якщо роль і походження фрагментів контексту не збережені.",
+                  "mitigation": "Розділяти системні інструкції та недовірений вміст структурно; маркувати походження кожного фрагмента; не дозволяти вхідному тексту змінювати політики чи надавати права інструментам."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "S2\nНедовірена телеметрія\nта результати пошуку"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "isALog": true
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 170,
+                "height": 85
+              },
+              "position": {
+                "x": 330,
+                "y": 220
+              },
+              "angle": 0,
+              "id": "e7360468-e98b-4a83-88f1-b013a31686ee",
+              "z": 3,
+              "description": "Об’єднує дозволені джерела, але зберігає мітки ролі, походження й довіри для кожного фрагмента.",
+              "threats": [
+                {
+                  "number": 20,
+                  "threatId": "3cfb6ebf-d8d1-4346-864f-0055c31506a9",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Змішування інструкцій і недовіреної телеметрії",
+                  "type": "Tampering",
+                  "description": "Текст, контрольований зовнішнім суб’єктом, може бути інтерпретований AI-агентом як керівна інструкція, якщо роль і походження фрагментів контексту не збережені.",
+                  "mitigation": "Розділяти системні інструкції та недовірений вміст структурно; маркувати походження кожного фрагмента; не дозволяти вхідному тексту змінювати політики чи надавати права інструментам."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "U1\nContext Builder\nФормувач контексту"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 155,
+                "height": 85
+              },
+              "position": {
+                "x": 565,
+                "y": 220
+              },
+              "angle": 0,
+              "id": "44e69331-a389-4969-9286-5a69eff3d99c",
+              "z": 4,
+              "description": "Інтерпретує контекст і формує висновки; згенерований текст не надає самостійних дозволів.",
+              "threats": [
+                {
+                  "number": 21,
+                  "threatId": "28e37455-5ad1-41d5-be9f-a13af95c1b3b",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Змішування інструкцій і недовіреної телеметрії",
+                  "type": "Tampering",
+                  "description": "Текст, контрольований зовнішнім суб’єктом, може бути інтерпретований AI-агентом як керівна інструкція, якщо роль і походження фрагментів контексту не збережені.",
+                  "mitigation": "Розділяти системні інструкції та недовірений вміст структурно; маркувати походження кожного фрагмента; не дозволяти вхідному тексту змінювати політики чи надавати права інструментам."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "U2\nLLM Engine\nМовна модель"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 150,
+                "height": 85
+              },
+              "position": {
+                "x": 785,
+                "y": 220
+              },
+              "angle": 0,
+              "id": "949b5a8a-264b-45fb-aa70-635059630ca6",
+              "z": 5,
+              "description": "Формує або впорядковує кроки агентного циклу, якщо цей модуль передбачений.",
+              "threats": [
+                {
+                  "number": 22,
+                  "threatId": "bf6a4e36-b382-4bf4-873f-7d507de36614",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Надмірне навантаження на агентний контур",
+                  "type": "Denial of service",
+                  "description": "Надмірний обсяг подій, контексту або повторних викликів може призвести до виснаження ресурсів чи затримки аналізу.",
+                  "mitigation": "Застосовувати ліміти розміру контексту, частоти запитів, часу виконання й кількості ітерацій; передбачити тайм-аути та контроль циклів."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "U3\nPlanner\nПланувальник"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 165,
+                "height": 80
+              },
+              "position": {
+                "x": 560,
+                "y": 425
+              },
+              "angle": 0,
+              "id": "1199ba12-e66f-4629-bb2c-015e8f7453cc",
+              "z": 6,
+              "description": "Збережений контекст або матеріали пошуку; вміст вважається недовіреним, якщо не встановлено інше.",
+              "threats": [
+                {
+                  "number": 23,
+                  "threatId": "a8186383-945f-48e8-a31a-caf8735272ad",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Змішування інструкцій і недовіреної телеметрії",
+                  "type": "Tampering",
+                  "description": "Текст, контрольований зовнішнім суб’єктом, може бути інтерпретований AI-агентом як керівна інструкція, якщо роль і походження фрагментів контексту не збережені.",
+                  "mitigation": "Розділяти системні інструкції та недовірений вміст структурно; маркувати походження кожного фрагмента; не дозволяти вхідному тексту змінювати політики чи надавати права інструментам."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "U4\nMemory / RAG\n(за наявності)"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "isALog": false
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 165,
+                "height": 85
+              },
+              "position": {
+                "x": 1000,
+                "y": 220
+              },
+              "angle": 0,
+              "id": "81509f8f-f2b9-445f-a7cd-b9c14079799d",
+              "z": 7,
+              "description": "Формує структурований виклик інструмента й обробляє результат.",
+              "threats": [
+                {
+                  "number": 24,
+                  "threatId": "015e636f-abac-4858-879c-6a459e8cbd7c",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Виконання несанкціонованого виклику інструмента",
+                  "type": "Elevation of privilege",
+                  "description": "Згенерований агентом запит може містити недозволену операцію або небезпечні аргументи. Текстова відповідь LLM сама по собі не є дозволом на виконання.",
+                  "mitigation": "Перевіряти операцію, аргументи, ціль і контекст незалежним шлюзом політик перед виконанням; забороняти невідомі інструменти та операції за замовчуванням."
+                },
+                {
+                  "number": 25,
+                  "threatId": "dabaeb62-6ed8-492a-8241-77057eb1714a",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Спотворення контексту або аргументів операції",
+                  "type": "Tampering",
+                  "description": "Модифікація вхідного контексту чи аргументів між плануванням і виконанням може змінити сенс запланованої дії.",
+                  "mitigation": "Зберігати зв’язок між планом і фактичним викликом; перевіряти типи, діапазони та схему аргументів; повторно перевіряти ціль і дозволи безпосередньо перед виконанням."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "U5\nTool / API Executor"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "privilegeLevel": "Тільки дозволені інструменти"
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 165,
+                "height": 85
+              },
+              "position": {
+                "x": 1000,
+                "y": 425
+              },
+              "angle": 0,
+              "id": "88dad795-5c88-43a5-82ae-f7ea30c5cdfe",
+              "z": 8,
+              "description": "Незалежно перевіряє назву інструмента, аргументи, ціль і повноваження перед виконанням.",
+              "threats": [
+                {
+                  "number": 26,
+                  "threatId": "6e8620a2-5dbc-4547-8c00-e271219ffa79",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Виконання несанкціонованого виклику інструмента",
+                  "type": "Elevation of privilege",
+                  "description": "Згенерований агентом запит може містити недозволену операцію або небезпечні аргументи. Текстова відповідь LLM сама по собі не є дозволом на виконання.",
+                  "mitigation": "Перевіряти операцію, аргументи, ціль і контекст незалежним шлюзом політик перед виконанням; забороняти невідомі інструменти та операції за замовчуванням."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "U6\nPolicy Enforcement\nКонтроль політик"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "privilegeLevel": "Дозвіл за явними правилами"
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 155,
+                "height": 85
+              },
+              "position": {
+                "x": 1250,
+                "y": 425
+              },
+              "angle": 0,
+              "id": "f95a98b9-e732-4e50-9b5e-d61279ba9e92",
+              "z": 9,
+              "description": "Система, до якої виконується дозволений виклик інструмента.",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "S3\nЗовнішній інструмент\nабо API"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                },
+                "#element-shape": {
+                  "class": ""
+                }
+              },
+              "privilegeLevel": "Дії лише у межах виданих прав"
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 165,
+                "height": 80
+              },
+              "position": {
+                "x": 785,
+                "y": 620
+              },
+              "angle": 0,
+              "id": "f02fe274-4524-4ce7-a0f9-36134a422a14",
+              "z": 10,
+              "description": "Формує пояснення, рекомендації або звіт і відокремлює факти від висновків моделі.",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "U7\nOutput / Report Builder"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 145,
+                "height": 75
+              },
+              "position": {
+                "x": 1050,
+                "y": 630
+              },
+              "angle": 0,
+              "id": "c7bd9b2b-063d-4807-87c9-0a20f84eefaa",
+              "z": 11,
+              "description": "Переглядає аналітичний результат і приймає рішення в межах своїх повноважень.",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "S4\nАналітик SOC"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                },
+                "#element-shape": {
+                  "class": ""
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 165,
+                "height": 80
+              },
+              "position": {
+                "x": 330,
+                "y": 620
+              },
+              "angle": 0,
+              "id": "edb8a236-c31c-4c51-8ecd-ac74df850fc8",
+              "z": 12,
+              "description": "Пов’язує запит, контекст, рішення політик, виклик інструмента й результат через ідентифікатор сесії.",
+              "threats": [
+                {
+                  "number": 27,
+                  "threatId": "c1615966-0eab-46ba-a1d4-3b3c6ee63289",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Недостатня простежуваність дій агента",
+                  "type": "Repudiation",
+                  "description": "Якщо контекст, рішення, виклик інструмента та його результат не пов’язані спільним ідентифікатором, неможливо надійно відновити послідовність взаємодій.",
+                  "mitigation": "Вести цілісний аудит із correlation/session ID, фіксувати запит, застосовану політику, рішення дозволу/відмови та результат без запису зайвих секретів."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "U8\nAudit Logger\nЖурналювання"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              },
+              "isALog": true
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "54b9a76c-f524-4bac-9606-dee9a35a22cc"
+              },
+              "target": {
+                "id": "e7360468-e98b-4a83-88f1-b013a31686ee"
+              },
+              "vertices": [
+                {
+                  "x": 280,
+                  "y": 145
+                }
+              ],
+              "id": "824b89c0-c4ec-4ea1-b980-41f3bdc37cea",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "H1 — довірені інструкції",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 20,
+              "description": "Інструкції надходять із довіреного конфігураційного джерела.",
+              "protocol": "Logical data flow",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "e8eb2aa2-21bf-4144-9b5c-ce365ae8abcb"
+              },
+              "target": {
+                "id": "e7360468-e98b-4a83-88f1-b013a31686ee"
+              },
+              "vertices": [
+                {
+                  "x": 280,
+                  "y": 410
+                }
+              ],
+              "id": "c52a7c8c-1c54-4ead-bf54-46ae72883184",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "H2 — недовірені дані",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 21,
+              "description": "Телеметрія та результати пошуку маркуються як дані, а не як керівні інструкції.",
+              "protocol": "Logical data flow",
+              "threats": [
+                {
+                  "number": 28,
+                  "threatId": "6dd3c937-f178-4146-b7bb-609549b5af82",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Змішування інструкцій і недовіреної телеметрії",
+                  "type": "Tampering",
+                  "description": "Текст, контрольований зовнішнім суб’єктом, може бути інтерпретований AI-агентом як керівна інструкція, якщо роль і походження фрагментів контексту не збережені.",
+                  "mitigation": "Розділяти системні інструкції та недовірений вміст структурно; маркувати походження кожного фрагмента; не дозволяти вхідному тексту змінювати політики чи надавати права інструментам."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "e7360468-e98b-4a83-88f1-b013a31686ee"
+              },
+              "target": {
+                "id": "44e69331-a389-4969-9286-5a69eff3d99c"
+              },
+              "vertices": [
+                {
+                  "x": 530,
+                  "y": 250
+                }
+              ],
+              "id": "80cec7da-4b7d-4538-a655-90932532a0c6",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "H3 — контекст із мітками",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 22,
+              "description": "Передається контекст зі збереженим походженням і ролями фрагментів.",
+              "protocol": "Logical data flow",
+              "threats": [
+                {
+                  "number": 29,
+                  "threatId": "7e510092-e335-4e91-b7ab-1197d6d44eef",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Змішування інструкцій і недовіреної телеметрії",
+                  "type": "Tampering",
+                  "description": "Текст, контрольований зовнішнім суб’єктом, може бути інтерпретований AI-агентом як керівна інструкція, якщо роль і походження фрагментів контексту не збережені.",
+                  "mitigation": "Розділяти системні інструкції та недовірений вміст структурно; маркувати походження кожного фрагмента; не дозволяти вхідному тексту змінювати політики чи надавати права інструментам."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "44e69331-a389-4969-9286-5a69eff3d99c"
+              },
+              "target": {
+                "id": "949b5a8a-264b-45fb-aa70-635059630ca6"
+              },
+              "vertices": [
+                {
+                  "x": 750,
+                  "y": 250
+                }
+              ],
+              "id": "079efd7c-a328-40e1-a00d-dab8028db1bd",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "H4 — план / варіант дії",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 23,
+              "description": "Висновок моделі не є дозволом на виконання.",
+              "protocol": "Logical data flow",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "949b5a8a-264b-45fb-aa70-635059630ca6"
+              },
+              "target": {
+                "id": "81509f8f-f2b9-445f-a7cd-b9c14079799d"
+              },
+              "vertices": [
+                {
+                  "x": 970,
+                  "y": 250
+                }
+              ],
+              "id": "c586365c-b17e-4120-8f56-8b2787350879",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "H5 — запит інструмента",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 24,
+              "description": "Планувальник формує запит, який потребує незалежної перевірки.",
+              "protocol": "Logical data flow",
+              "threats": [
+                {
+                  "number": 30,
+                  "threatId": "c2330adf-c8fb-432e-b6d8-02389a9342b7",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Виконання несанкціонованого виклику інструмента",
+                  "type": "Elevation of privilege",
+                  "description": "Згенерований агентом запит може містити недозволену операцію або небезпечні аргументи. Текстова відповідь LLM сама по собі не є дозволом на виконання.",
+                  "mitigation": "Перевіряти операцію, аргументи, ціль і контекст незалежним шлюзом політик перед виконанням; забороняти невідомі інструменти та операції за замовчуванням."
+                },
+                {
+                  "number": 31,
+                  "threatId": "ba4d38ce-3afc-4aa5-aaa9-193f0326ef80",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Спотворення контексту або аргументів операції",
+                  "type": "Tampering",
+                  "description": "Модифікація вхідного контексту чи аргументів між плануванням і виконанням може змінити сенс запланованої дії.",
+                  "mitigation": "Зберігати зв’язок між планом і фактичним викликом; перевіряти типи, діапазони та схему аргументів; повторно перевіряти ціль і дозволи безпосередньо перед виконанням."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "81509f8f-f2b9-445f-a7cd-b9c14079799d"
+              },
+              "target": {
+                "id": "88dad795-5c88-43a5-82ae-f7ea30c5cdfe"
+              },
+              "vertices": [
+                {
+                  "x": 1080,
+                  "y": 350
+                }
+              ],
+              "id": "2f88602b-9975-4179-88f2-e99b6ed07485",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "H6 — інструмент та аргументи",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 25,
+              "description": "Перевіряються тип, ціль, аргументи та область повноважень.",
+              "protocol": "Logical data flow",
+              "threats": [
+                {
+                  "number": 32,
+                  "threatId": "b723906d-e5b7-407a-9bd4-1e120a4da953",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Виконання несанкціонованого виклику інструмента",
+                  "type": "Elevation of privilege",
+                  "description": "Згенерований агентом запит може містити недозволену операцію або небезпечні аргументи. Текстова відповідь LLM сама по собі не є дозволом на виконання.",
+                  "mitigation": "Перевіряти операцію, аргументи, ціль і контекст незалежним шлюзом політик перед виконанням; забороняти невідомі інструменти та операції за замовчуванням."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "88dad795-5c88-43a5-82ae-f7ea30c5cdfe"
+              },
+              "target": {
+                "id": "f95a98b9-e732-4e50-9b5e-d61279ba9e92"
+              },
+              "vertices": [
+                {
+                  "x": 1215,
+                  "y": 470
+                }
+              ],
+              "id": "3dc1cee3-eb6d-4fdc-bb1e-9fb6f4e57fa4",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "H7 — дозволений виклик",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 26,
+              "description": "Передається лише операція, дозволена політикою.",
+              "protocol": "Logical data flow",
+              "threats": [
+                {
+                  "number": 33,
+                  "threatId": "fdc572e7-89d5-4a54-b8b3-742ba9055546",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Виконання несанкціонованого виклику інструмента",
+                  "type": "Elevation of privilege",
+                  "description": "Згенерований агентом запит може містити недозволену операцію або небезпечні аргументи. Текстова відповідь LLM сама по собі не є дозволом на виконання.",
+                  "mitigation": "Перевіряти операцію, аргументи, ціль і контекст незалежним шлюзом політик перед виконанням; забороняти невідомі інструменти та операції за замовчуванням."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "f95a98b9-e732-4e50-9b5e-d61279ba9e92"
+              },
+              "target": {
+                "id": "44e69331-a389-4969-9286-5a69eff3d99c"
+              },
+              "vertices": [
+                {
+                  "x": 900,
+                  "y": 520
+                },
+                {
+                  "x": 650,
+                  "y": 520
+                },
+                {
+                  "x": 650,
+                  "y": 330
+                }
+              ],
+              "id": "029214fd-9efc-4905-8ba6-f36a64070449",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "H8 — спостереження / результат",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 27,
+              "description": "Результат інструмента повертається до агентного циклу як дані; цикл може повторюватися.",
+              "protocol": "Logical data flow",
+              "threats": [
+                {
+                  "number": 34,
+                  "threatId": "194e26c4-3c24-410c-8785-2a5c64f23cd3",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Змішування інструкцій і недовіреної телеметрії",
+                  "type": "Tampering",
+                  "description": "Текст, контрольований зовнішнім суб’єктом, може бути інтерпретований AI-агентом як керівна інструкція, якщо роль і походження фрагментів контексту не збережені.",
+                  "mitigation": "Розділяти системні інструкції та недовірений вміст структурно; маркувати походження кожного фрагмента; не дозволяти вхідному тексту змінювати політики чи надавати права інструментам."
+                },
+                {
+                  "number": 35,
+                  "threatId": "438aa9da-c0c1-43c6-96ce-e458e64d1239",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Надмірне навантаження на агентний контур",
+                  "type": "Denial of service",
+                  "description": "Надмірний обсяг подій, контексту або повторних викликів може призвести до виснаження ресурсів чи затримки аналізу.",
+                  "mitigation": "Застосовувати ліміти розміру контексту, частоти запитів, часу виконання й кількості ітерацій; передбачити тайм-аути та контроль циклів."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "44e69331-a389-4969-9286-5a69eff3d99c"
+              },
+              "target": {
+                "id": "f02fe274-4524-4ce7-a0f9-36134a422a14"
+              },
+              "vertices": [
+                {
+                  "x": 700,
+                  "y": 560
+                },
+                {
+                  "x": 840,
+                  "y": 560
+                }
+              ],
+              "id": "3190d1f0-1f3f-4cfd-ad96-509af3857c90",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "H9 — аналітичний вміст",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 28,
+              "description": "Контент для пояснення інциденту чи рекомендації.",
+              "protocol": "Logical data flow",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "f02fe274-4524-4ce7-a0f9-36134a422a14"
+              },
+              "target": {
+                "id": "c7bd9b2b-063d-4807-87c9-0a20f84eefaa"
+              },
+              "vertices": [
+                {
+                  "x": 1010,
+                  "y": 660
+                }
+              ],
+              "id": "e576ac4f-459d-4eab-9614-69afb3ac2302",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "H10 — звіт / рекомендація",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 29,
+              "description": "Результат передається аналітику; автоматичне виконання не передбачається цим потоком.",
+              "protocol": "Logical data flow",
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "e7360468-e98b-4a83-88f1-b013a31686ee"
+              },
+              "target": {
+                "id": "edb8a236-c31c-4c51-8ecd-ac74df850fc8"
+              },
+              "vertices": [
+                {
+                  "x": 420,
+                  "y": 580
+                }
+              ],
+              "id": "04ff188b-8817-49d9-aea2-4af20c6d82af",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "H11 — контекст аудиту",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 30,
+              "description": "Фіксується ідентифікатор джерела й сформованого контексту.",
+              "protocol": "Logical data flow",
+              "threats": [
+                {
+                  "number": 36,
+                  "threatId": "96a17e3c-37ca-4eb1-a5fd-b6596e47bca9",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Недостатня простежуваність дій агента",
+                  "type": "Repudiation",
+                  "description": "Якщо контекст, рішення, виклик інструмента та його результат не пов’язані спільним ідентифікатором, неможливо надійно відновити послідовність взаємодій.",
+                  "mitigation": "Вести цілісний аудит із correlation/session ID, фіксувати запит, застосовану політику, рішення дозволу/відмови та результат без запису зайвих секретів."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "81509f8f-f2b9-445f-a7cd-b9c14079799d"
+              },
+              "target": {
+                "id": "edb8a236-c31c-4c51-8ecd-ac74df850fc8"
+              },
+              "vertices": [
+                {
+                  "x": 760,
+                  "y": 390
+                },
+                {
+                  "x": 470,
+                  "y": 390
+                },
+                {
+                  "x": 470,
+                  "y": 600
+                }
+              ],
+              "id": "b5135cca-d989-4df2-b8ca-daa891c08782",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "H12 — виклики та результати",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 31,
+              "description": "Запити інструментів і результати мають бути пов’язані в аудиті.",
+              "protocol": "Logical data flow",
+              "threats": [
+                {
+                  "number": 37,
+                  "threatId": "f2a7d0e8-a927-45f6-a912-069d7f295f99",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Недостатня простежуваність дій агента",
+                  "type": "Repudiation",
+                  "description": "Якщо контекст, рішення, виклик інструмента та його результат не пов’язані спільним ідентифікатором, неможливо надійно відновити послідовність взаємодій.",
+                  "mitigation": "Вести цілісний аудит із correlation/session ID, фіксувати запит, застосовану політику, рішення дозволу/відмови та результат без запису зайвих секретів."
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": true,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 270,
+                "y": 70
+              },
+              "target": {
+                "x": 270,
+                "y": 535
+              },
+              "vertices": [
+                {
+                  "x": 270,
+                  "y": 220
+                },
+                {
+                  "x": 270,
+                  "y": 400
+                }
+              ],
+              "id": "4fb2633c-3982-48b2-90ce-8337c3d67175",
+              "z": 40,
+              "isTrustBoundary": true,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 960,
+                "y": 150
+              },
+              "target": {
+                "x": 960,
+                "y": 555
+              },
+              "vertices": [
+                {
+                  "x": 960,
+                  "y": 280
+                },
+                {
+                  "x": 960,
+                  "y": 430
+                }
+              ],
+              "id": "c43a2361-b056-4ed4-8429-b54c7a3bbf58",
+              "z": 41,
+              "isTrustBoundary": true,
+              "attrs": {}
+            }
+          ]
+        },
+        "description": "Логічні модулі U1–U8, окремі джерела довірених інструкцій і недовіреної телеметрії, контроль викликів інструментів і можливе повернення спостереження до агентного циклу."
+      }
+    ]
+  }
+}
